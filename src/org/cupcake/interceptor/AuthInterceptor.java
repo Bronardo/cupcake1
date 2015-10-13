@@ -30,16 +30,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                     session.removeAttribute("pw");
                     */
                     System.out.println(username+"=====|==="+password);
-                    if(userService.login(username, password))//如果验证成功返回true
+                    if(userService.login(username, password))//澶勭悊鎴愬姛
                     {
                     	session.setAttribute("valid", "1");
                     	System.out.println("------prehandle success!!!!!!");
                     	return true;
                     }
-                    else//如果验证失败
+                    else//澶勭悊澶辫触
                     {
-                        //返回到登录界面
-                    	session.setAttribute("valid", null);
                     	System.out.println("------------prehandle failed");
                         response.sendRedirect(contextPath);
                         return false;
