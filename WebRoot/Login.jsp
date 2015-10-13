@@ -54,6 +54,7 @@ $().ready(function() {
 
 </head>
 <body>
+	<p><a href="<%=path %>/druid">Druid 监控入口</a></p>
 	<form name="form1" action="<%=path%>/validateLogin" method="post">
 		<table width="300" border="1">
 			<tr>

@@ -49,6 +49,7 @@ pageEncoding="UTF-8"%>
 </script>  
 </head>  
 <body>  
+	<p><a href="<%=path %>/druid">Druid 监控入口</a></p>
     <h6><a href="toAddUser">添加用户</a></h6>  
     <table border="1">  
         <tbody>  
