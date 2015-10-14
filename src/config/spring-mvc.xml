@@ -47,7 +47,7 @@
 		scope="prototype">
 		<property name="patterns">
 			<list>
-				<value>org.cupcak.service.*</value>
+				<value>org.cupcake.service.UserService</value>
 			</list>
 		</property>
 	</bean>
