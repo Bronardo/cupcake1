@@ -39,6 +39,7 @@
 			</list>
 		</property>
 	</bean>
+
 	<!-- ===========================druid监控============================= -->
 	<bean id="druid-stat-interceptor"
 		class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor" />
@@ -46,7 +47,7 @@
 		scope="prototype">
 		<property name="patterns">
 			<list>
-				<value>org.cupcake.service.*</value>
+				<value>org.cupcak.service.*</value>
 			</list>
 		</property>
 	</bean>
@@ -54,7 +55,6 @@
 		<aop:advisor advice-ref="druid-stat-interceptor"
 			pointcut-ref="druid-stat-pointcut" />
 	</aop:config>
-
 	<!-- 定义拦截器 -->
 	<mvc:interceptors>
 		<!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 -->

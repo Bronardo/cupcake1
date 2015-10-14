@@ -27,6 +27,7 @@ public class UserDaoImpl implements UserDao {
 		String hql = "from User u where u.user_id=?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, Integer.toString(id));
+
 		return (User) query.uniqueResult();
 	}
 
@@ -38,6 +39,7 @@ public class UserDaoImpl implements UserDao {
 		String hql = "from User u where u.login_name=?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, name);
+
 		return (User) query.uniqueResult();
 	}
 
@@ -46,8 +48,10 @@ public class UserDaoImpl implements UserDao {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<User> getAllUser() {
+
 		String hql = "from User";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+
 		return query.list();
 	}
 
@@ -55,10 +59,11 @@ public class UserDaoImpl implements UserDao {
 	 * 添加
 	 */
 	public boolean addUser(User user) {
-		if (getUserByName(user.getLogin_name()) != null)
-			return false;
-		sessionFactory.getCurrentSession().save(user);
-		return true;
+		if(getUserByName(user.getLogin_name())!=null) return false;
+		else{
+			sessionFactory.getCurrentSession().save(user);
+			return true;
+		}
 	}
 
 	/**
@@ -69,6 +74,7 @@ public class UserDaoImpl implements UserDao {
 		String hql = "delete User u where u.user_id = ?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, id);
+
 		return (query.executeUpdate() > 0);
 	}
 
@@ -76,11 +82,13 @@ public class UserDaoImpl implements UserDao {
 	 * 更新
 	 */
 	public boolean updateUser(User user) {
+		if(getUserByName(user.getLogin_name())!=null) return false;
 		String hql = "update User u set u.login_name = ?,u.password=? where u.user_id = ?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, user.getLogin_name());
 		query.setString(1, user.getPassword());
 		query.setString(2, Integer.toString(user.getUser_id()));
+
 		return (query.executeUpdate() > 0);
 	}
 }

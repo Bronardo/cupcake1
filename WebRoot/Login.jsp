@@ -12,9 +12,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <base href="<%=basePath%>">
 <script type="text/javascript" src="<%=path %>/js/jquery-2.1.4.min.js"></script> 
 <script src="<%=path %>/js/jquery.validate.js" type="text/javascript"></script>
-<!--  
 <script src="<%=path %>/js/messages_zh.min.js" type="text/javascript"></script>
--->
+
 <title>登陆</title>
 
 <meta http-equiv="pragma" content="no-cache">
@@ -26,49 +25,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 <script>
-
+$.validator.setDefaults({
+	submitHandler:function() {
+		alert("submitted!");
+	}
+});
 $().ready(function() {
  	$("#form1").validate({
+ 		debug:true,
    		rules:{
- 			id:{
- 				required:true,
- 				minlength:2
- 			},
- 			pw:{
+ 			cid:"required",
+ 			cpw:{
  				required:true,
  				minlength:2
  			}
  		},
  		
  		messages:{
- 			id:{
- 				required:"请输入用户名",
- 				minlength:"用户名长度不能小于2个字符"
- 			},
- 			pw:{
+ 			cid:"请输入用户名",
+ 			cpw:{
  				required:"请输入密码",
- 				minlength:"密码不能小于2个字符 "
+ 				minlength:JQuery.format("密码不能小于 {0}个字符 ")
  			}
  		}
  	});
 });
-
 </script>
+
 </head>
 <body>
 	<p><a href="<%=path %>/druid">Druid 监控入口</a></p>
-	<form class="cmxform" id="form1" action="<%=path%>/validateLogin" method="post">
-		<table width="500" border="1">
+	<form name="form1" action="<%=path%>/validateLogin" method="post">
+		<table width="300" border="1">
 			<tr>
 				<td colspan="2">登录窗口</td>
 			</tr>
 			<tr>
-				<td><lable for="cpw">用户名</lable></td>
-				<td><p><input type="text" id="cid" name="id" size="10"></p></td>
+				<td>用户名</td>
+				<td><input type="text" id="cid" name="id" size="10" required minlength=2></td>
 			</tr>
 			<tr>
-				<td><lable for="cpw">密码</lable></td>
-				<td><input type="password" id="cpw" name="pw" size="10"></td>
+				<td>密码</td>
+				<td><input type="password" id="cpw" name="pw" size="10" required minlength=2></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" name="submit" value="登录">

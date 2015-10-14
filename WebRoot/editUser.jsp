@@ -18,8 +18,8 @@ String path = request.getContextPath();
 <h1>编辑用户</h1>  
 <form action="<%=path%>/updateUser" name="userForm" method="post">  
     <input type="hidden" name="user_id" value="${user.user_id }">  
-    登陆名：<input type="text" name="login_name" value="${user.login_name }" required minlength="2">  
-    密码：<input type="text" name="password" value="${user.password }" required minlength="2">  
+    登陆名：<input type="text" name="login_name" value="${user.login_name }">  
+    密码：<input type="text" name="password" value="${user.password }">  
     <input type="submit" value="编辑" >  
 </form>  
 </body>  
