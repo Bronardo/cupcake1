@@ -37,6 +37,7 @@ public class LoginController {
     	String pw = request.getParameter("pw");
     	request.getSession().setAttribute("id", id);
     	request.getSession().setAttribute("pw", pw);
+    	request.getSession().setAttribute("valid", null);
     	System.out.println("-----------------in validate login");
         return "redirect:getAllUser";
     }
@@ -60,7 +61,7 @@ public class LoginController {
 	        e.printStackTrace();  
 	    }  
 	    */
-    	System.out.println("----there are errors ÊıÁ¿:"+result.getErrorCount());
+    	System.out.println("----there are errors æ•°é‡:"+result.getErrorCount());
 	    if(!result.hasErrors()){
 	    	userService.addUser(user);
 	    	return "redirect:";
@@ -101,9 +102,9 @@ public class LoginController {
     @Auth
 	@RequestMapping("addUser")  
 	public String addUser(@Valid User user, BindingResult result){  
-    	System.out.println("ÓÃ»§Ãûin addUser£º======"+user.getLogin_name());  
+    	System.out.println("ï¿½Ã»ï¿½ï¿½ï¿½in addUserï¿½ï¿½======"+user.getLogin_name());  
     	if(result.hasErrors()) return "redirect:getAllUser";
-	    System.out.println("ÓÃ»§Ãû£º======"+user.getLogin_name());  
+	    System.out.println("ï¿½Ã»ï¿½ï¿½ï¿½======"+user.getLogin_name());  
 	    userService.addUser(user);  
 	    return "redirect:getAllUser";  
 	}  

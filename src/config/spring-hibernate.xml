@@ -2,17 +2,55 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 		xmlns:mvc="http://www.springframework.org/schema/mvc"
-		xsi:schemaLocation="http://www.springframework.org/schema/beans   
-		http://www.springframework.org/schema/beans/spring-beans.xsd">
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 	
 	<!-- 配置数据源 -->
+	<!-- 老数据源 
 	<bean id="dataSource"
 	    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 	    <property name="url" value="jdbc:mysql://localhost/cupcake"></property>
 	    <property name="username" value="root"></property>
 	    <property name="password" value="880322"></property>
-	</bean>
+	</bean>-->
+	<!-- druid 数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">   
+        <property name="url" value="jdbc:mysql://localhost/cupcake" />  
+        <property name="username" value="root" />
+        <property name="password" value="880322" />
+        <!--初始化时建立物理连接的个数-->
+        <property name="initialSize" value="10" /> 
+        <!--最小连接池数量-->
+        <property name="minIdle" value="10" /> 
+        <!--最大连接池数量-->  
+        <property name="maxActive" value="200" />
+        <!-- 配置获取连接等待超时的时间 单位毫秒 -->
+        <property name="maxWait" value="60000" />
+        <!-- 是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭。 -->
+        <property name="poolPreparedStatements"    value="true" />
+        <!-- 指定每个连接上PSCache的大小 -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <!-- 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。
+        	在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100 -->
+        <property name="maxOpenPreparedStatements" value="100" />  
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句。 -->
+        <property name="validationQuery" value="SELECT 1" />
+        <!-- 建议配置为true，果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。 -->
+        <property name="testWhileIdle" value="true" />
+        <!-- 归申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。 -->
+        <property name="testOnBorrow" value="false" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能 -->
+        <property name="testOnReturn" value="false" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat" />
+    </bean>
+	
 	
 	<!-- 配置SessionFactory -->
 	<bean id="sessionFactory"

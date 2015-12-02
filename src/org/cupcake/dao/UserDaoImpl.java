@@ -3,8 +3,10 @@ package org.cupcake.dao;
 import java.util.List;
 
 import org.cupcake.entity.User;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/**
-	 * ¸ù¾İÓÃ»§id²éÑ¯ÓÃ»§
+	 * æ ¹æ®ç”¨æˆ·idæŸ¥è¯¢
 	 */
 	public User getUserById(int id) {
 
@@ -30,7 +32,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/**
-	 * ¸ù¾İÓÃ»§µÇÂ½Ãû²éÑ¯ÓÃ»§
+	 * æ ¹æ®ç”¨æˆ·åæŸ¥è¯¢
 	 */
 	public User getUserByName(String name) {
 
@@ -42,7 +44,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/**
-	 * ²éÑ¯ËùÓĞÓÃ»§
+	 * æŸ¥è¯¢æ‰€æœ‰user
 	 */
 	@SuppressWarnings("unchecked")
 	public List<User> getAllUser() {
@@ -54,22 +56,18 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/**
-	 * Ìí¼ÓÓÃ»§
+	 * æ·»åŠ 
 	 */
 	public boolean addUser(User user) {
-		try{
-		sessionFactory.getCurrentSession().save(user);
-		
+		if(getUserByName(user.getLogin_name())!=null) return false;
+		else{
+			sessionFactory.getCurrentSession().save(user);
+			return true;
 		}
-		catch(Exception e){
-			System.out.println("user name already existed");
-			return false;
-		}
-		return true;
 	}
 
 	/**
-	 * ¸ù¾İÓÃ»§idÉ¾³ıÓÃ»§
+	 * åˆ é™¤
 	 */
 	public boolean delUser(String id) {
 
@@ -81,10 +79,10 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/**
-	 * ±à¼­ÓÃ»§
+	 * æ›´æ–°
 	 */
 	public boolean updateUser(User user) {
-
+		if(getUserByName(user.getLogin_name())!=null) return false;
 		String hql = "update User u set u.login_name = ?,u.password=? where u.user_id = ?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, user.getLogin_name());
